@@ -6,12 +6,12 @@
 
 <script>
 // import Skills from './components/Skills.vue'
-import Login from './components/Login.vue'
+import Dashboard from './components/Dashboard.vue'
 
 export default {
   name: 'app',
   components: {
-    Login
+    Dashboard
   }
 }
 </script>

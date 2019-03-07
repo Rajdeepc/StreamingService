@@ -12,7 +12,6 @@ Vue.use(VueSessionStorage)
 Vue.use(BootstrapVue);
 Vue.use(VeeValidate);
 
-axios.defaults.baseURL = 'http://demo6727947.mockable.io/loginValidation';
 Vue.config.productionTip = false
 
 new Vue({

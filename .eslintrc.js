@@ -8,8 +8,8 @@ module.exports = {
     'plugin:vue/essential',
     'eslint:recommended'
   ],
-  rules: {
-    "no-console": 0,
+  jsRules: {
+    'no-console': 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   },
   parserOptions: {
