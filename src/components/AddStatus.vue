@@ -16,7 +16,7 @@
                 drop-placeholder="Drop file here..."
                 required
               />
-             <button class="btn btn-primary" @click="uploadSong(songfile)">Upload</button>
+             <!-- <button class="btn btn-primary" @click="uploadSong(songfile)">Upload</button> -->
               <div class="mt-3">Selected file: {{ songfile ? songfile.name : '' }}</div>
 
               <!-- Plain mode -->
@@ -91,13 +91,14 @@
               id="release_date"
             />
           </div>
-          <div class="col-xs-3 mb-3">
-            <label for="validationCustom01" class="empty-label">&nbsp;</label>
-            <button class="addRowBtn btn btn-success" @click="uploadSongData()">Upload</button>
-          </div>
+          
         </div>
       </b-form>
-      <p v-if="showMessage === true">Data SuccessFully Saved</p>
+      <div class="col-xs-3 mb-3">
+            <label for="validationCustom01" class="empty-label">&nbsp;</label>
+            <button class="addRowBtn btn btn-success" @click="uploadRow()">Upload</button>
+          </div>
+      <!-- <p v-if="showMessage === true">Data SuccessFully Saved</p> -->
     </div>
   </div>
 </template>
@@ -136,15 +137,61 @@ export default {
     }
   },
   methods: {
-    uploadSong:function(songfile){
+    /** upload song */
+    uploadSong:function(){
       let formData = new FormData();
-      formData.append('file',songfile)
-      DataPostApi.uploadSongtoS3(formData)
-      .then(response => {
-        console.log("Response from aws" + JSON.stringify(response));
+      formData.append('file',this.songfile)
+      let uploadedSong = DataPostApi.uploadSongtoS3(formData)
+       return uploadedSong;
+    },
+    /** upload song */
+    uploadImage: function() {
+      let formData = new FormData();
+      formData.append('file',this.imagefile)
+      let uploadedImage = DataPostApi.uploadImagetoS3(formData)
+      return uploadedImage;
+    },
+    uploadRow:function() {
+      let me = this; 
+      this.uploadSong()
+      .then(responseSong => {
+        console.log("Song link from AWS" + JSON.stringify(responseSong));
+        if(responseSong.status == 200) {
+          me.uploadImage()
+            .then(responseImage => {
+              console.log("Image link from AWS" + JSON.stringify(responseImage));
+              if(responseImage.status == 200) {
+                this.sendSongImage(responseSong,responseImage);
+              }
+            }).catch(err => {
+              console.log("Error from Aws" + err)
+            })
+        }
       }).catch(err => {
         console.log("Error from Aws" + err)
-      })
+      });
+    },
+    sendSongImage: function(responseSong,responseImage){
+      let media_file = responseSong.data.location;
+      let media_name = this.name;
+      let media_file_thumbnail = responseImage.data.location;
+      let media_genre = this.selected;
+      let media_artist_name = this.artist;
+      let media_album_name = this.album;
+      let media_release_date = this.release_date;
+      DataPostApi.uploadFiletoDatabase(
+        media_file,
+        media_name,
+        media_file_thumbnail,
+        media_genre,
+        media_artist_name,
+        media_album_name,
+        media_release_date
+        ).then((response) => {
+          console.log("Response from Database" + response)
+        }).catch(err => {
+          console.log("Error from Database" +err);
+        })
     }
   }
 };

@@ -72,26 +72,29 @@ export default {
             return response;
         })
     },
-    /** upload file to s3 api call */
+    /** upload song to s3 api call */
     uploadSongtoS3(fileSong) {
         const url = `${BASE_URL}/upload`;
         const body = fileSong;
-        return axios.post(url,body)
-        .then(response => {
-            return response.data
-        })
+        return axios.post(url,body);
+    },
+    /** upload image to s3 api call */
+    uploadImagetoS3(imageFile) {
+        const url = `${BASE_URL}/upload`;
+        const body = imageFile;
+        return axios.post(url,body);
     },
     /** upload api call from front end */
-    uploadFiletoDatabase(songfile,imagefile,selected,name,artist,album,release_date) {
-        const url = 'http://localhost:3000/uploadData';
+    uploadFiletoDatabase(media_file,media_name,media_file_thumbnail,media_genre,media_artist_name,media_album_name,media_release_date) {
+        const url = `${BASE_URL}/addmusic`;
         const body = {
-            songfile: songfile,
-            imagefile:imagefile,
-            selected:selected,
-            name:name,
-            artist:artist,
-            album:album,
-            release_date:release_date
+            media_file: media_file,
+            media_name:media_name,
+            media_file_thumbnail:media_file_thumbnail,
+            media_genre:media_genre,
+            media_artist_name:media_artist_name,
+            media_album_name:media_album_name,
+            media_release_date:media_release_date
         }
         return axios.post(url,body)
         .then(response => {
