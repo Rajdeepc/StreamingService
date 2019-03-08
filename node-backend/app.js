@@ -4,8 +4,30 @@ var mongoose = require("mongoose");
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var app = express();
+const AWS = require('aws-sdk');
+const multer = require('multer');
+const storage = multer.memoryStorage()
+const upload = multer({storage: storage});
+const JSON = require('circular-json');
+
 
 var musicId = 0;
+
+/** S3 configurations */
+const s3Client = new AWS.S3({
+    accessKeyId: 'AKIAJUMFRWW47IJWAXJA',
+    secretAccessKey: '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',
+    ACL:'public-read'
+});
+/** S3 upload parameters */
+
+const uploadParams = {
+         Bucket: 'mymusicstream', 
+         Key: null, // pass key
+         Body: null, // pass file body
+};
+
+
 /**connection string to db */
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost:27017/musicdb");
@@ -58,6 +80,30 @@ var musicListSchema = new mongoose.Schema({
 
 /** instances of schema */
 var MusicList = mongoose.model("musiclist", musicListSchema);
+
+
+/** upload music to s3 */
+
+app.post('/upload' ,upload.single('file'), (req,res) => {
+    uploadParams.Key = req.file.originalname;
+    uploadParams.Body = req.file.buffer;
+
+    const params = uploadParams;
+    
+    s3Client.upload(params, (err, data) => {
+        if (err) {
+            console.log("File uplaoded fail" + err);
+            res.status(500).json({error:"Error -> " + err});
+        }else {
+            console.log("File uplaoded success");
+            console.log("location" + JSON.stringify(data.Location));
+            res.json({message: 'File uploaded successfully','filename': 
+            req.file.originalname, 'location': data.Location});
+           
+        }
+       
+    });
+});
 
 /** save music to the db */
 app.post("/addmusic", (req, res) => {

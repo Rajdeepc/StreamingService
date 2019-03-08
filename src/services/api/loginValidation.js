@@ -1,21 +1,9 @@
 import axios from 'axios';
+const BASE_URL = 'http://localhost:3000';
 
 export default {
 
-    /**
-     * axios call to validate login credentials
-     */
-    validateLogin(username,password) {
-        const body = {
-            username: username,
-            password: password
-          };
-        const url = "http://localhost:3000/login";
-        return axios.post(url,body)
-        .then(response => {
-            return response.data;
-        })
-    },
+
     
     /** Save status to db */
     
@@ -37,21 +25,6 @@ export default {
     },
         /** Add Project to db by admin */
 
-    projectsaveApi(date_created,manager_name,project_name,no_of_members,member_names) {
-        const body = {
-                date_created:date_created,
-                project_name:project_name,
-                manager_name:manager_name,
-                no_of_members:no_of_members,
-                member_names:member_names
-          };
-        const url = "http://localhost:3000/postprojectdata";
-        return axios.post(url,body)
-        .then(response => {
-            return response.data;
-        })
-    },
-
     projectDetailsApi(username) {
         console.log(username);
         const url = `http://localhost:3000/getprojectdata/${username}`;
@@ -71,13 +44,6 @@ export default {
         })
     },
 
-    // getUtterance() {
-    //     const url = "http://localhost:3000/getlogs";
-    //     return axios.get(url)
-    //     .then(response => {
-    //         return response;
-    //     })
-    // },
     /** update fields */
 
     updateStatusById(_id,description,percentage_completion,completed_date) {
@@ -106,16 +72,32 @@ export default {
             return response;
         })
     },
-    sendStatusMail(to,htmlbody) {
+    /** upload file to s3 api call */
+    uploadSongtoS3(fileSong) {
+        const url = `${BASE_URL}/upload`;
+        const body = fileSong;
+        return axios.post(url,body)
+        .then(response => {
+            return response.data
+        })
+    },
+    /** upload api call from front end */
+    uploadFiletoDatabase(songfile,imagefile,selected,name,artist,album,release_date) {
+        const url = 'http://localhost:3000/uploadData';
         const body = {
-            to:to,
-            htmlbody:htmlbody
-      };
-    const url = "http://localhost:3000/sendemail";
-    return axios.post(url,body)
-    .then(response => {
-        return response.data;
-    })
-}
+            songfile: songfile,
+            imagefile:imagefile,
+            selected:selected,
+            name:name,
+            artist:artist,
+            album:album,
+            release_date:release_date
+        }
+        return axios.post(url,body)
+        .then(response => {
+            return response.data
+        })
+    }
+   
 }
 
