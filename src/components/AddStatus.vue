@@ -1,10 +1,9 @@
 <template>
   <div>
     <div class="formToAdd">
-      <h4>Upload Files Here:</h4>
       <b-form v-if="show">
         <div class="form-row">
-          <div class="form-group col-md-3 mb-3">
+          <div class="form-group col-md-4 mb-4">
             <label for="validationCustom01">Upload Song</label>
             <div>
               <!-- Styled -->
@@ -22,7 +21,7 @@
               <!-- Plain mode -->
             </div>
           </div>
-          <div class="form-group col-xs-2 mb-2">
+          <div class="form-group col-md-4 mb-4">
             <label for="validationCustom01">Upload Image</label>
 
             <div>
@@ -40,7 +39,7 @@
 
             </div>
           </div>
-          <div class="form-group col-xs-2 mb-2">
+          <div class="form-group col-md-4 mb-4">
             <label for="validationCustom01">Enter Genre</label>
 
             <b-form-select v-model="selected" :options="options"/>
@@ -48,7 +47,7 @@
               <strong>{{ selected }}</strong>
             </div>
           </div>
-          <div class="form-group col-xs-2 mb-2">
+          <div class="form-group col-md-4 mb-4">
             <label for="validationCustom01">Song Name</label>
             <b-input
               class="mb-2 mr-sm-2 mb-sm-0"
@@ -59,7 +58,7 @@
               required
             />
           </div>
-          <div class="form-group col-xs-2 mb-2">
+          <div class="form-group col-md-4 mb-4">
             <label for="validationCustom01">Artist Name</label>
             <b-input
               class="mb-2 mr-sm-2 mb-sm-0"
@@ -70,7 +69,7 @@
               required
             />
           </div>
-          <div class="form-group col-xs-2 mb-2">
+          <div class="form-group col-md-4 mb-4">
             <label for="validationCustom01">Album Name</label>
             <b-input
               class="mb-2 mr-sm-2 mb-sm-0"
@@ -81,7 +80,7 @@
               required
             />
           </div>
-          <div class="form-group col-xs-2 mb-2">
+          <div class="form-group col-xs-6 mb-6">
             <label for="validationCustom01">Release date</label>
             <b-input
               class="mb-2 mr-sm-2 mb-sm-0"
@@ -94,7 +93,7 @@
           
         </div>
       </b-form>
-      <div class="col-xs-3 mb-3">
+      <div class="col-xs-6 mb-6 text-right">
             <label for="validationCustom01" class="empty-label">&nbsp;</label>
             <button class="addRowBtn btn btn-success" @click="uploadRow()">Upload</button>
           </div>
@@ -104,7 +103,7 @@
 </template>
 
 <script>
-  import DataPostApi from "../services/api/loginValidation";
+  import DataPostApi from "../services/api/services";
 export default {
    name: "AddStatus",
   data() {
@@ -212,6 +211,14 @@ export default {
 }
 .empty-label {
   width: 100%;
+}
+.btn-success {
+    color: #fff;
+    background-color: #C7003C;
+    border-color: #C7003C;
+}
+.formToAdd{
+  padding-top: 30px;
 }
 </style>
 

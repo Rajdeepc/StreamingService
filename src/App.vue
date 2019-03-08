@@ -20,19 +20,21 @@ export default {
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
 body {
-  background-color: #EEEEEE;
+  background-color: #fff;
   font-family: 'Montserrat', sans-serif;
   display: grid;
   grid-template-rows: auto;
   justify-items: center;
   padding-top: 50px;
+  color: #000;
+
 }
 body, html {
   margin: 0;
   height: 100%;
 }
 #app {
-    width: 90%;
+    width: 100%;
 }
 nav {
   padding: 20px 20px 20px 0;

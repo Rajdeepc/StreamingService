@@ -3,35 +3,34 @@
     <b-navbar type="dark" variant="info" fixed="top">
         <h3>My Music Admin</h3>
     </b-navbar>
-    <div class="container">
-          <AddStatus></AddStatus>
-    </div>
-
+    <b-container>
+        <b-col sm="12"> <AddStatus></AddStatus></b-col>
+    </b-container>
   </div>
 </template>
 
 
 <script>
-  import AddStatus from "./AddStatus.vue";
-  
-  export default {
-    name: "Dashboard",
-    props: [],
-    data() {
-        return {
+import AddStatus from "./AddStatus.vue";
 
-        }
-    },
-    components: {
-      AddStatus: AddStatus
-    },
-    methods: {
-     
-      init() {
-        
-      },
-    
-    }
-  };
+export default {
+  name: "Dashboard",
+  props: [],
+  data() {
+    return {};
+  },
+  components: {
+    AddStatus: AddStatus
+  },
+  methods: {
+    init() {}
+  }
+};
 </script>
+
+<style>
+.containerB {
+  background: #0a182a;
+}
+</style>
 
