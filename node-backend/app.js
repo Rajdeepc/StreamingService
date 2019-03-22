@@ -15,14 +15,14 @@ var musicId = 0;
 
 /** S3 configurations */
 const s3Client = new AWS.S3({
-    accessKeyId: 'AKIAJUMFRWW47IJWAXJA',
-    secretAccessKey: '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',
+    accessKeyId: 'abc',
+    secretAccessKey: 'abc',
     ACL:'public-read'
 });
 /** S3 upload parameters */
 
 const uploadParams = {
-         Bucket: 'mymusicstream', 
+         Bucket: 'xyz', 
          Key: null, // pass key
          Body: null, // pass file body
 };
