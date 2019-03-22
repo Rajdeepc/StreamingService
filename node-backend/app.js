@@ -17,7 +17,7 @@ var musicId = 0;
 const s3Client = new AWS.S3({
     accessKeyId: 'abc',
     secretAccessKey: 'abc',
-    ACL:'public-read'
+    ACL:'private-read'
 });
 /** S3 upload parameters */
 
@@ -122,47 +122,47 @@ app.post("/addmusic", (req, res) => {
 
 /**retrieving all music list data */
 
-app.get('/getallMusicList', (req,res)=>{
-    MusicList.find({},(err,items) => {
-        console.log(err);
-        res.json(items);
-    })
-});
+// app.get('/getallMusicList', (req,res)=>{
+//     MusicList.find({},(err,items) => {
+//         console.log(err);
+//         res.json(items);
+//     })
+// });
 
-/** delete a music record */
+// /** delete a music record */
 
-app.delete('/deleterecord/:_id', (req,res) =>{
-    MusicList.findByIdAndRemove(req.params._id , (err,data) => {
-    if(!err){
-        console.log("Deleted");
-        res.status(200).send(data);
-    } else{
-        console.log("Error deleting" + err);
-        res.status(400).send({data: "Error in delete"});
-    }
-  })
-});
+// app.delete('/deleterecord/:_id', (req,res) =>{
+//     MusicList.findByIdAndRemove(req.params._id , (err,data) => {
+//     if(!err){
+//         console.log("Deleted");
+//         res.status(200).send(data);
+//     } else{
+//         console.log("Error deleting" + err);
+//         res.status(400).send({data: "Error in delete"});
+//     }
+//   })
+// });
 
 
 
 /** update music record with id */
 
-app.put('/:_id/updaterecord', (req,res) => {
-    let id = req.params._id;
-    MusicList.findByIdAndUpdate(id, { $set : {
-        media_file: req.body.media_file,
-        media_name: req.body.media_name,
-        media_file_thumbnail: req.body.media_file_thumbnail,
-        media_genre: req.body.media_genre,
-        media_artist_name: req.body.media_artist_name,
-        media_album_name: req.body.media_album_name,
-        media_release_date: req.body.media_release_date
-    }}, (err,data) => {
-        if(err) {
-            res.status(200).send('Update Successful');
-            console.log("Error in update" + id);
-        } else {
-            res.status(400).send('Error in update');
-        }
-    })
-});
+// app.put('/:_id/updaterecord', (req,res) => {
+//     let id = req.params._id;
+//     MusicList.findByIdAndUpdate(id, { $set : {
+//         media_file: req.body.media_file,
+//         media_name: req.body.media_name,
+//         media_file_thumbnail: req.body.media_file_thumbnail,
+//         media_genre: req.body.media_genre,
+//         media_artist_name: req.body.media_artist_name,
+//         media_album_name: req.body.media_album_name,
+//         media_release_date: req.body.media_release_date
+//     }}, (err,data) => {
+//         if(err) {
+//             res.status(200).send('Update Successful');
+//             console.log("Error in update" + id);
+//         } else {
+//             res.status(400).send('Error in update');
+//         }
+//     })
+// });
